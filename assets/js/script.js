@@ -47,9 +47,23 @@ function runGame(gameType) {
 function checkAnswer(params) {
     
 }
-//perform calculation and return correct answer and game type to checkAnswer function
+
+/**
+ * Gets the operands (the numbers) and the operator (plus, minus etc)
+ * directly from the dom and returns the right answer
+ */
 function calculateCorrectAnswer(params) {
-    
+    // .innerText gets the text content of the elements. parseInt makes sure a number is returned rather than a string, which is the default
+    let operand1 = parseInt(document.getElementById("operand1").innerText);
+    let operand2 = parseInt(document.getElementById("operand2").innerText);
+    let operator = document.getElementById("operator").innerText;
+
+    if (operator === "+") {
+        return [operand1 + operand2 + "addition"];
+    } else {
+        alert(`Unimplemented operator ${operator}`);
+        throw `Unimplemented operator ${operator}. Aborting`;
+    }
 }
 // increment and log correct answers
 function incrementScore(params) {
