@@ -35,8 +35,10 @@ function runGame(gameType) {
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
 
-    if (gameType === "addition") {
+    if (gameType === "addition") { // gameType is being taken from the html button data-type, it has to match the name there. if its "addition" it will display addition question, otherwise which ever one is selected
         displayAdditionQuestion(num1, num2);
+    } else if (gameType === "multiply"){
+        displayMultiplyQuestion(num1, num2)
     } else {
         alert(`Unknown game type: ${gameType}`);
         //throw statement stops game running and sends error message to console
@@ -78,12 +80,14 @@ function checkAnswer() {
  */
 function calculateCorrectAnswer() {
     
-    let operand1 = parseInt(document.getElementById("operand1").innerText);
+    let operand1 = parseInt(document.getElementById("operand1").innerText); // gets the innertext of the html span operand1
     let operand2 = parseInt(document.getElementById("operand2").innerText);
     let operator = document.getElementById("operator").innerText;
 
-    if (operator === "+") {
+    if (operator === "+") { //if the operator === "+" return array calculating the answer between operator 1 and 2 and call the game type addition to load so the user can play again
         return [operand1 + operand2, "addition"];
+    } else if (operator === "x") { // same as above for multiply and call the multiply game to run
+        return [operand1 * operand2, "multiply"] 
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting!`;
@@ -116,6 +120,7 @@ function incrementWrongAnswer(params) {
 }
 // display the questions
 function displayAdditionQuestion(operand1, operand2) {
+    
     document.getElementById("operand1").textContent = operand1;
     document.getElementById("operand2").textContent = operand2;
     document.getElementById("operator").textContent = "+";
@@ -126,7 +131,11 @@ function displaySubtractQuestion(params) {
     
 }
 
-function displayMultiplyQuestion(params) {
+function displayMultiplyQuestion(operand1, operand2) {
+
+    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "x";
     
 }
 
