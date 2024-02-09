@@ -2,7 +2,7 @@
 //good idea to wait for DOM to load befor you start running code so you arent targeting elements that haven't loaded yet
 //get the button elements and add event listeners to them
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() { // adds when the dom is loaded
     //get all the buttons in an array, there are 5 buttons- [0,1,2,3,4]
     let buttons = document.getElementsByTagName("button");
 
@@ -21,6 +21,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         });
     }
+
+    // key function makes website keyboard controlled. here if the enter key is pressed the value in answer-box is entered and checkAnswer function is called
+    document.getElementById("answer-box").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            checkAnswer();
+        }
+    })
+
     //default game to run on open
     runGame("addition");
 
@@ -31,6 +39,13 @@ document.addEventListener("DOMContentLoaded", function() {
  *  and after the user's answer has been processed
  */
 function runGame(gameType) {
+
+    //gets the input element answer-box and sets its value to an empty string, so the answer box clears each time and you don't have to delete the previous input
+    document.getElementById("answer-box").value = ""; 
+
+    // each time the game runs, makes the answer box the focus by putting the cursor in it by default
+    document.getElementById("answer-box").focus(); 
+
     //creates 2 random number between 1-25
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
