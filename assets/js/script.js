@@ -10,21 +10,21 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let button of buttons) {
         //button is now each button and when one is clicked the code inside the block will load
         button.addEventListener("click", function() {
-            //shows an alert telling the user which button was clicked, either submit or which type of game was clicked
+            //calls the checkAnswer function
             if (this.getAttribute("data-type") === "submit") {
-                alert("You clicked Submit!");
+                checkAnswer();
             } else {
                 let gameType = this.getAttribute("data-type");
                 //call runGame function
                 runGame(gameType);
             }
 
-        })
+        });
     }
     //default game to run on open
     runGame("addition");
 
-})
+});
 
 /**
  *  The main game "loop", called when the script is first loaded
@@ -44,25 +44,46 @@ function runGame(gameType) {
     }
 }
 
-function checkAnswer(params) {
-    
+/**
+ * checks the users answer against the first element in 
+ * the returned calculateCorrectAnswer
+ *
+ */
+function checkAnswer() {
+
+    // takes answer from the input with the id answer-box and stores it in let = userAnswer
+    let userAnswer = parseInt(document.getElementById("answer-box").value);
+    let calculatedAnswer = calculateCorrectAnswer(); // returns an array [the correct answer in a number, and the method used eg "addition"]
+    let isCorrect = userAnswer === calculatedAnswer[0]; // checks the users answer matches the first item in the array, the correct answer
+
+    // we check them against each other and either return a congratulations or comiserations and the correct answer
+    if (isCorrect) {
+        alert("Hey! You got it right! :D");
+    } else {
+        alert(`Awwww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
+    }
+
+    // run the game again after of the same type, so the user can carry on playing, so calling the second element in calculatedAnswer array: the game type
+    runGame(calculatedAnswer[1]);
+
+
 }
 
 /**
  * Gets the operands (the numbers) and the operator (plus, minus etc)
  * directly from the dom and returns the right answer
  */
-function calculateCorrectAnswer(params) {
-    // .innerText gets the text content of the elements. parseInt makes sure a number is returned rather than a string, which is the default
+function calculateCorrectAnswer() {
+    
     let operand1 = parseInt(document.getElementById("operand1").innerText);
     let operand2 = parseInt(document.getElementById("operand2").innerText);
     let operator = document.getElementById("operator").innerText;
 
     if (operator === "+") {
-        return [operand1 + operand2 + "addition"];
+        return [operand1 + operand2, "addition"];
     } else {
         alert(`Unimplemented operator ${operator}`);
-        throw `Unimplemented operator ${operator}. Aborting`;
+        throw `Unimplemented operator ${operator}. Aborting!`;
     }
 }
 // increment and log correct answers
