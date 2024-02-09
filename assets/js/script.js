@@ -59,8 +59,11 @@ function checkAnswer() {
     // we check them against each other and either return a congratulations or comiserations and the correct answer
     if (isCorrect) {
         alert("Hey! You got it right! :D");
+        incrementScore(); // calls this function and updates correct answers
+
     } else {
         alert(`Awwww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
+        incrementWrongAnswer(); // calls this function and updates incorrect answers
     }
 
     // run the game again after of the same type, so the user can carry on playing, so calling the second element in calculatedAnswer array: the game type
@@ -86,12 +89,29 @@ function calculateCorrectAnswer() {
         throw `Unimplemented operator ${operator}. Aborting!`;
     }
 }
-// increment and log correct answers
+
+/**
+ * gets the current score from the DOM and increments it by 1
+ * 
+ */
 function incrementScore(params) {
+
+    // create a variable getting the inner text of the span with the id of score
+    let oldScore = parseInt(document.getElementById("score").innerText);
+    // now we have the variable we can write it back to the DOM and alter the inner text of the span. ++oldScore adds one to the value
+    document.getElementById("score").innerText = ++oldScore;
     
 }
-//increment and log wrong answers
+
+/**
+ * gets the current tally of incorrect answers from the DOM and increments it by 1
+ */
 function incrementWrongAnswer(params) {
+
+    // create a variable getting the inner text of the span with the id of incorrect
+    let oldScore = parseInt(document.getElementById("incorrect").innerText);
+    // now we have the variable we can write it back to the DOM and alter the inner text of the span. ++oldScore adds one to the value
+    document.getElementById("incorrect").innerText = ++oldScore;
     
 }
 // display the questions
