@@ -37,8 +37,10 @@ function runGame(gameType) {
 
     if (gameType === "addition") { // gameType is being taken from the html button data-type, it has to match the name there. if its "addition" it will display addition question, otherwise which ever one is selected
         displayAdditionQuestion(num1, num2);
+    } else if (gameType === "subtract") {
+        displaySubtractQuestion(num1, num2);
     } else if (gameType === "multiply"){
-        displayMultiplyQuestion(num1, num2)
+        displayMultiplyQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         //throw statement stops game running and sends error message to console
@@ -84,10 +86,12 @@ function calculateCorrectAnswer() {
     let operand2 = parseInt(document.getElementById("operand2").innerText);
     let operator = document.getElementById("operator").innerText;
 
-    if (operator === "+") { //if the operator === "+" return array calculating the answer between operator 1 and 2 and call the game type addition to load so the user can play again
+    if (operator === "+") { //if the operator === "+" in the html innertext, return array calculating the answer between operator 1 and 2 and call the game type addition to load so the user can play again
         return [operand1 + operand2, "addition"];
-    } else if (operator === "x") { // same as above for multiply and call the multiply game to run
-        return [operand1 * operand2, "multiply"] 
+    } else if (operator === "-") // same as above but changed to subtract and call the subtract game to carry on running run
+        return [operand1 - operand2, "subtract"]; 
+      else if (operator === "x") { 
+        return [operand1 * operand2, "multiply"]; 
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting!`;
@@ -121,13 +125,20 @@ function incrementWrongAnswer(params) {
 // display the questions
 function displayAdditionQuestion(operand1, operand2) {
     
-    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand1").textContent = operand1; // without let gets the element to alter it. this will get the span with the id "operand1" and alter its inner text to the random numbers created in runGame 
     document.getElementById("operand2").textContent = operand2;
-    document.getElementById("operator").textContent = "+";
+    document.getElementById("operator").textContent = "+"; // without let gets the element to alter it. this will get the span with the id "operator" and alter its inner text to "+"
 
 }
 
-function displaySubtractQuestion(params) {
+function displaySubtractQuestion(operand1, operand2) {
+
+    // we need the bigger number first to subtract it so theres no minus numbers
+    // this works like an if statement: the condition we are checking goes before the "?" the else part goes after the ":"
+    //this question is, is operand1 bigger than operand2? if 1 is bigger return that, if 2 is bigger return that 
+    document.getElementById("operand1").textContent = operand1 > operand2 ? operand1 : operand2;
+    document.getElementById("operand2").textContent = operand1 > operand2 ? operand2 : operand1;
+    document.getElementById("operator").textContent = "-";
     
 }
 
